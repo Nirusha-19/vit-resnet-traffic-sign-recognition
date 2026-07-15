@@ -1,12 +1,6 @@
 """
 Downloads the OFFICIAL GTSRB release (39,209 train / 12,630 test), not the smaller IJCNN 2011 competition version torchvision's built-in
 GTSRB downloader provides (26,640 / 12,569). Both are legitimate, real releases of the same dataset; this project uses the larger, later one.
-
-The training images already come organized in one folder per class, so no reorganizing is needed there. The test images come as a flat
-folder with a separate ground-truth CSV -- this script reads that CSV and copies each test image into its own class subfolder, so both
-splits end up in the same ImageFolder-compatible layout.
-
-Run this first, before training either model.
 """
 import os
 import sys
