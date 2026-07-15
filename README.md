@@ -1,10 +1,6 @@
 # 🚦 ViT vs. ResNet-50: Robustness and Edge Quantization for Traffic Sign Recognition
 
----
-
 ![Python](https://img.shields.io/badge/Python-3.11-blue) ![PyTorch](https://img.shields.io/badge/PyTorch-2.x-red) ![License](https://img.shields.io/badge/License-MIT-green) ![Dataset](https://img.shields.io/badge/Dataset-GTSRB-orange)
-
----
 
 Fine-tunes and compares a Vision Transformer (ViT) and a ResNet-50 CNN on German traffic sign classification (43 real sign types, genuinely imbalanced), evaluates both under simulated real world degraded conditions, shows what each model focuses on using the technique appropriate to each architecture, and quantizes both models to measure the real cost and benefit of edge deployment.
 
