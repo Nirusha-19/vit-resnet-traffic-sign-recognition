@@ -1,6 +1,6 @@
 """
-Downloads the OFFICIAL GTSRB release (39,209 train / 12,630 test), not the smaller IJCNN 2011 competition version torchvision's built-in
-GTSRB downloader provides (26,640 / 12,569). Both are legitimate, real releases of the same dataset; this project uses the larger, later one.
+Downloads the official GTSRB release (39,209 training images, 12,630 test images) and organizes the flat test set into class subfolders using the
+official ground-truth CSV.
 """
 import os
 import sys
