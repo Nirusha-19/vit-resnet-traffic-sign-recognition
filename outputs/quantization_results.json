@@ -1,0 +1,9 @@
+{
+  "model": "resnet",
+  "original_latency_ms": 20.328359603881836,
+  "quantized_latency_ms": 19.028639793395996,
+  "latency_speedup_pct": 6.39362858495306,
+  "original_size_mb": 90.31389331817627,
+  "quantized_size_mb": 90.0626859664917,
+  "size_reduction_pct": 0.2781491777788414
+}

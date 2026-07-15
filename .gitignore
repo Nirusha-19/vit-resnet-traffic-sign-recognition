@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+*.pyc
+data/raw/
+data/test_organized/
+outputs/*.pt
+outputs/heatmaps/
