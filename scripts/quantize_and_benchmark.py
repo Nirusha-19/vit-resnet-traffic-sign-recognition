@@ -1,11 +1,5 @@
 """
-Applies INT8 dynamic quantization to the trained model and benchmarks latency (ms per image) and file size, before vs. after -- this is the
-project's second headline result, alongside the accuracy/F1 comparison.
-
-Runs entirely on CPU on purpose (see common.py) -- torch.quantization's dynamic quantization is a CPU feature; this isn't a limitation being
-worked around, it's the correct environment for this technique.
-
-Run this after choosing which model (ViT or ResNet) performed better in compare_results.py -- pass --model vit or --model resnet.
+Applies INT8 dynamic quantization to the trained model and benchmarks latency (ms per image) and file size, before vs. after 
 """
 import os
 import sys
@@ -73,10 +67,7 @@ def main():
     print(f"  Original: {original_latency_ms:.2f} ms/image, {original_size_mb:.2f} MB")
 
     print("\nApplying INT8 dynamic quantization...")
-    # Apple Silicon (ARM) needs the qnnpack backend explicitly set --
-    # without this, quantize_dynamic fails with "Didn't find engine for
-    # operation quantized::linear_prepack NoQEngine", since PyTorch
-    # doesn't always auto-select the right backend on ARM.
+    
     torch.backends.quantized.engine = "qnnpack"
     quantized_model = torch.quantization.quantize_dynamic(
         model, {torch.nn.Linear}, dtype=torch.qint8
@@ -107,9 +98,6 @@ def main():
           f"({results['size_reduction_pct']:+.1f}%)")
     print("=" * 50)
 
-    # Load existing results (if any) so we don't overwrite the other
-    # model's entry -- both models' results live together in one file,
-    # keyed by model name.
     all_results = {}
     if os.path.exists(QUANTIZATION_RESULTS):
         with open(QUANTIZATION_RESULTS) as f:
