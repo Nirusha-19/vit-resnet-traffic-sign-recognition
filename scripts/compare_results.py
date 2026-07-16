@@ -1,5 +1,5 @@
 """
-Prints the ViT vs. ResNet comparison table. Run after both train_vit.py and train_resnet.py have finished and saved their results.
+Prints the ViT vs. ResNet comparison table.
 """
 import json
 import os
