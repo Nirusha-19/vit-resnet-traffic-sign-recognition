@@ -1,8 +1,7 @@
 """
-Shared utilities for training and evaluating both models on GTSRB: dataset loading with a stratified train/val split, focal loss (to
-handle the genuine imbalance across the 43 sign classes), and a common evaluation function reporting accuracy, macro-averaged precision/
-recall/F1, and the recall on the single worst-performing class, called out specifically, since that's the class most likely to be a
-rare sign type the model struggles to learn.
+Shared utilities for training and evaluating both models on GTSRB: dataset loading with a stratified train/val split, focal loss for the
+genuine class imbalance, and a common evaluation function reporting accuracy, macro-averaged precision/recall/F1, and the worst-performing
+class's recall.
 """
 import os
 import sys
@@ -41,13 +40,7 @@ def get_transforms(train: bool):
 
 
 class FocalLoss(nn.Module):
-    """Generalizes cross-entropy by down-weighting predictions the model
-    already gets right easily (high predicted probability for the
-    correct class), so training effort concentrates on the harder,
-    rarer classes -- a stronger fix for severe imbalance than plain
-    class-weighted loss alone. Class weights (alpha) are still applied
-    on top, folding both techniques together.
-    """
+    
     def __init__(self, class_weights=None, gamma=FOCAL_LOSS_GAMMA):
         super().__init__()
         self.gamma = gamma
@@ -61,16 +54,13 @@ class FocalLoss(nn.Module):
 
 
 def get_dataloaders(batch_size=16):
-    # PPM is a supported extension for ImageFolder, but pass an explicit
-    # is_valid_file check anyway -- each class folder also contains a
-    # GT-<classid>.csv annotation file, and this guarantees only the
-    # actual .ppm images get picked up, not the CSV alongside them.
+
     is_ppm = lambda path: path.lower().endswith(".ppm")
 
     train_full = ImageFolder(TRAIN_IMAGES_DIR, transform=get_transforms(train=True), is_valid_file=is_ppm)
     val_full = ImageFolder(TRAIN_IMAGES_DIR, transform=get_transforms(train=False), is_valid_file=is_ppm)
 
-    # ImageFolder exposes .targets directly -- no need to read every label manually just to build the stratified split
+    # ImageFolder exposes .targets directly - no need to read every label manually to build the stratified split
     labels = train_full.targets
 
     train_idx, val_idx = train_test_split(
@@ -95,7 +85,7 @@ def compute_class_weights(train_labels, num_classes=NUM_CLASSES):
     counts = torch.zeros(num_classes)
     for label in train_labels:
         counts[label] += 1
-    counts = torch.clamp(counts, min=1)  # avoid divide-by-zero for any unseen class
+    counts = torch.clamp(counts, min=1)  
     total = counts.sum()
     weights = total / (num_classes * counts)
     print(f"Class weight range: min={weights.min():.3f}, max={weights.max():.3f} "
@@ -104,18 +94,11 @@ def compute_class_weights(train_labels, num_classes=NUM_CLASSES):
 
 
 def evaluate_model(model, data_loader, topk=(3, 5)):
-    """Top-1 metrics here are what actually matters for deployment --
-    this is a safety-relevant classification task, and there's no such
-    thing as "close enough" when a wrong answer could mean acting on
-    the wrong speed limit or missing a stop sign. Top-1 accuracy,
-    precision, recall, and F1 are the numbers to trust.
-
-    Top-K accuracy (below) is included purely as a DIAGNOSTIC metric,
-    to understand whether the model's mistakes are near-misses (e.g.
-    confusing two similar speed limit signs) or wildly wrong (confusing
-    a speed limit with a stop sign). It is NOT a substitute for Top-1
-    accuracy and should never be reported as if it reflects real-world
-    reliability.
+    """Top-1 metrics are what matter for deployment - there's no "close enough" when a wrong answer could mean acting on the wrong speed
+    limit or missing a stop sign.
+    
+    Top-K accuracy (below) is diagnostic only, showing whether mistakes are near-misses or wildly wrong. It is not a substitute for Top-1
+    and should never be read as real-world reliability.
     """
     model.eval()
     all_preds, all_labels = [], []
