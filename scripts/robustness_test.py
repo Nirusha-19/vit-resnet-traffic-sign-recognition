@@ -1,16 +1,10 @@
 """
 Robustness testing under synthetic corruptions.
 
-GTSRB's own images already contain some natural variation -- each sign was photographed multiple times as a vehicle approached it, so
+GTSRB's own images already contain some natural variation, each sign was photographed multiple times as a vehicle approached it, so
 there's real variety in distance and angle. But it doesn't include severe weather or extreme conditions. This script tests both trained
-models against synthetic corruptions -- blur, low light, added noise to see how much accuracy drops under conditions closer to a genuinely
+models against synthetic corruptions - blur, low light, added noise to see how much accuracy drops under conditions closer to a genuinely
 bad real-world driving scenario.
-
-The key output isn't the raw accuracy under each corruption, it's the SIZE OF THE DROP compared to the clean baseline, for each model. A
-smaller drop means a model that holds up better under real degraded conditions, which matters more for a safety-relevant task like this
-than clean-condition accuracy alone.
-
-Run this after both models have been trained.
 """
 import os
 import sys
