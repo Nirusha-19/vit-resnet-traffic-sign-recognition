@@ -1,4 +1,4 @@
-# 🚦 ViT vs. ResNet-50: Robustness and Edge Quantization for Traffic Sign Recognition
+# ViT vs. ResNet-50: Robustness and Edge Quantization for Traffic Sign Recognition
 
 ![Python](https://img.shields.io/badge/Python-3.11-blue) ![PyTorch](https://img.shields.io/badge/PyTorch-2.x-red) ![License](https://img.shields.io/badge/License-MIT-green) ![Dataset](https://img.shields.io/badge/Dataset-GTSRB-orange)
 
