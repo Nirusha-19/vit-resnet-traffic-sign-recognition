@@ -1,8 +1,6 @@
 """
 Fine-tunes google/vit-base-patch16-224 for GTSRB traffic sign classification (43 classes), using focal loss to handle the genuine
 imbalance across sign types. Trains and saves explicitly on CPU throughout (see common.py for why).
-
-Run this after data/prepare_data.py. 
 """
 import os
 import sys
@@ -59,11 +57,6 @@ def main():
               f"val macro F1: {val_results['macro_f1']:.4f}, "
               f"worst-class recall: {val_results['worst_class_recall']:.4f}")
 
-        # Early-stopping style checkpoint: keep whichever epoch's weights
-        # scored best on validation macro F1, rather than blindly using
-        # whatever the final epoch happens to produce. A later epoch can
-        # genuinely perform worse than an earlier one, so this avoids reporting a worse
-        # result than what the training run actually achieved.
         if val_results["macro_f1"] > best_val_f1:
             best_val_f1 = val_results["macro_f1"]
             best_epoch = epoch
