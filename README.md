@@ -54,7 +54,7 @@ In a real deployment, recognizing a road sign has to happen instantly, on the ve
 
 Both models share the same single hardest sign type (class 22), suggesting that class is intrinsically difficult rather than a weakness specific to one architecture. On clean condition metrics alone, ResNet-50 is the stronger model.
 
-## 🌧️ Robustness Under Degraded Conditions
+## 🌫️ Robustness Under Degraded Conditions
 
 Both models were re tested on the full test set after applying synthetic blur, low light, and noise corruptions. This tests conditions harsher than GTSRB's own natural variation covers, closer to genuinely adverse real world driving conditions.
 
