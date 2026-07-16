@@ -1,8 +1,6 @@
 """
 Fine-tunes a pretrained ResNet-50 for the same GTSRB traffic sign classification task (43 classes), using the identical data split and
 focal loss as train_vit.py, so the comparison against the ViT is fair.
-
-Run this after data/prepare_data.py (and independently of train_vit.py).
 """
 import os
 import sys
