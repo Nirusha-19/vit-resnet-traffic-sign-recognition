@@ -107,8 +107,18 @@ def main():
           f"({results['size_reduction_pct']:+.1f}%)")
     print("=" * 50)
 
+    # Load existing results (if any) so we don't overwrite the other
+    # model's entry -- both models' results live together in one file,
+    # keyed by model name.
+    all_results = {}
+    if os.path.exists(QUANTIZATION_RESULTS):
+        with open(QUANTIZATION_RESULTS) as f:
+            all_results = json.load(f)
+
+    all_results[args.model] = results
+
     with open(QUANTIZATION_RESULTS, "w") as f:
-        json.dump(results, f, indent=2)
+        json.dump(all_results, f, indent=2)
     print(f"\nSaved results to {QUANTIZATION_RESULTS}")
 
 
