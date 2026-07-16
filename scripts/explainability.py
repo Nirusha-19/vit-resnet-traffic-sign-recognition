@@ -1,12 +1,5 @@
 """
 Explainability visualizations for both models.
-
-Important distinction, worth understanding rather than glossing over: Grad-CAM is built around convolutional layers, so it's used here for the
-ResNet-50 model. A Vision Transformer has no convolutional layers to hook into -- instead, this script visualizes the ViT's own attention weights
-(how strongly the classification token attends to each image patch in the final layer), which is the correct, standard way to visualize what a ViT
-is "looking at." Using plain Grad-CAM on a ViT would be a technical mismatch, so this script deliberately uses the right tool for each model.
-
-Run this after both models have been trained.
 """
 import os
 import sys
