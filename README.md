@@ -78,9 +78,9 @@ Both models were quantized to INT8 using `torch.quantization.quantize_dynamic`, 
 | Model | Metric | Original | Quantized | Change |
 |---|---|---|---|---|
 | **ViT** | File size | 327.49 MB | 84.45 MB | **74.2% smaller** |
-| **ViT** | Latency | 55.22 ms/image | 95.44 ms/image | **72.8% slower** |
+| **ViT** | Latency | 61.99 ms/image | 91.76 ms/image | **48.0% slower** |
 | **ResNet-50** | File size | 90.31 MB | 90.06 MB | 0.3% smaller (negligible) |
-| **ResNet-50** | Latency | 20.33 ms/image | 19.03 ms/image | 6.4% faster |
+| **ResNet-50** | Latency | 20.33 ms/image | 19.03 ms/image | **6.4% faster** |
 
 The same technique affected each architecture differently, for a technically explainable reason. PyTorch's dynamic quantization only converts `Linear` layers. ViT's parameters live predominantly in linear layers, so quantization substantially shrank its file size, but the runtime overhead of converting between full precision and INT8 on every forward pass outweighed the compute savings, making it slower overall. ResNet-50's parameters live predominantly in convolutional layers, which this technique doesn't touch, so its file size and latency both stayed close to unchanged.
 
