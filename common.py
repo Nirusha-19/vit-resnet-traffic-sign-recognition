@@ -2,7 +2,7 @@ import os
 
 ROOT = os.path.dirname(os.path.abspath(__file__))
 
-# GTSRB (German Traffic Sign Recognition Benchmark) -- 39,209 training images, 12,630 test images, 43 classes, genuinely imbalanced.
+# GTSRB (German Traffic Sign Recognition Benchmark) - 39,209 training images, 12,630 test images, 43 classes, genuinely imbalanced.
 # Licensed CC BY, freely usable with attribution.
 GTSRB_BASE_URL = "https://sid.erda.dk/public/archives/daaeac0d7ce1152aea9b61d9f1e19370/"
 NUM_CLASSES = 43
@@ -33,7 +33,7 @@ ROBUSTNESS_RESULTS = os.path.join(OUTPUTS_DIR, "robustness_results.json")
 # harder, rarer classes. 2.0 is the standard default from the original focal loss paper (Lin et al., 2017).
 FOCAL_LOSS_GAMMA = 2.0
 
-# IMPORTANT: every script in this project explicitly targets CPU, on purpose. Two reasons: (1) torch.quantization's dynamic INT8
+# IMPORTANT: Every script in this project explicitly targets CPU, on purpose. Two reasons: (1) torch.quantization's dynamic INT8
 # quantization is a CPU-focused feature with limited/no MPS support, and (2) saving a model while it's on an MPS device embeds
 # device-specific info in the checkpoint, which breaks loading on machines without MPS. Training on CPU here avoids repeating that problem.
 DEVICE = "cpu"
